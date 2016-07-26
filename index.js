@@ -178,7 +178,7 @@ var Tabs = function (_Component) {
 
         return _react2.default.createElement(
             'div',
-            _extends({ className: clazz }, others),
+            _extends({ className: clazz }, _objectWithoutProperties(others, ['tab'])),
             innerContent
         );
     };
