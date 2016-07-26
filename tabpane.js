@@ -27,7 +27,7 @@ exports.default = function (props) {
 
     var clazz = (0, _classnames2.default)('tab-panel', className);
 
-    return _react2.default.createElement('div', _extends({ className: clazz }, others));
+    return _react2.default.createElement('div', _extends({ className: clazz }, _objectWithoutProperties(others, ['tab']));
 };
 
 module.exports = exports['default'];
