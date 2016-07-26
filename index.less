@@ -1,0 +1,173 @@
+@import "~m-base/base/mixins";
+@import "~m-base/base/variables";
+
+// tabs
+@tabs-prefix: tab;
+@tabs-bg-color: @N1_1;
+@tabs-border-color: @N1_6;
+@tabs-color: @N2_2;
+@tabs-primary-color: @B1_1;
+@tabs-capsule-color: @N1_8;
+@tabs-app-border-color: @N1_7;
+@tabs-app-bg-color: @N1_2;
+
+.@{tabs-prefix}s {
+	
+	&-inner {
+		background-color: @tabs-bg-color;
+		.flexbox();
+
+		> a {
+			position: relative;
+			display: block;
+			white-space: nowrap;
+			text-decoration: none;
+			text-align: center;
+			color: inherit;
+			.font-size(@font-size-body);
+
+			> span {
+				display: block;
+			}
+		}
+
+		+ .@{tabs-prefix}-content {
+			text-align: left;
+		}
+
+		.badge {
+			position: absolute;
+			.top(4);
+			.margin-left(4);
+			left: 50%;
+			&:empty {
+				.margin-left(6);
+			}
+		}
+	}
+	
+	// 导航式tab
+	&-nav {
+		> .@{tabs-prefix}s-inner {
+			.scrollable();
+			.none-scrollbar();
+			.height(@S10);
+			color: @tabs-color;	
+
+			> a {
+				.flex(1, 0);
+				.min-width(80);
+				.height(@S10);
+				.padding-top(@S3);
+				.padding-bottom(@S3 - 4);
+				.border-bottom(1, @tabs-border-color);
+
+				> span {
+					.line-height(@S4);
+					//.padding-left(@S5);
+					//.padding-right(@S5);
+				}
+				+ a > span {
+					.border-left(1, @tabs-border-color);
+				}
+				&.active {
+					.border-bottom(4, @tabs-primary-color);
+				}
+			}
+		}
+	}
+
+	// 胶囊tab
+	&-capsule {
+		> .@{tabs-prefix}s-inner {
+			.margin(0, @S3);
+			color: @tabs-capsule-color;
+			.height(@S8);
+			.border(1, @tabs-capsule-color);
+			.border-radius(@btn-border-radius);
+
+			> a {
+				.flex(1, 0);
+				.padding(0, @S3);
+				.line-height(@S8 - 2);
+				+ a {
+					.border-left(1, @tabs-capsule-color);
+				}
+				&.active {
+					background-color: @tabs-capsule-color;
+					color: @tabs-bg-color;
+				}
+			}
+		}
+
+		&.@{tabs-prefix}s-center {
+			text-align: center;
+
+			> .@{tabs-prefix}s-inner {
+				.flexbox-inline();
+				border-color: @tabs-primary-color;
+				> a {
+					.padding-left(@S4);
+					.padding-right(@S4);
+					color: @tabs-primary-color;
+
+					+ a {
+						border-left-color: @tabs-primary-color;
+					}
+					&.active {
+						background-color: @tabs-primary-color;
+						color: @tabs-bg-color;
+					}
+				}
+			}
+		}
+	}
+
+	// app menu
+	&-app {
+		> .@{tabs-prefix}s-inner {
+			.border-top(1, @tabs-app-border-color);
+			.height(@S12);
+			background-color: @tabs-app-bg-color;
+			.font-size(@font-size-body);
+
+			> a {
+				.flex(1, 0);
+				.min-width(60);
+				.height(@S12 - 1);
+				
+				> span {
+					.line-height(@S12 - 1);
+				}
+
+				.@{iconfont} {
+					display: block;
+					.line-height(@S6);
+					.margin-top(6);
+					.font-size(24);
+					+ span {
+						display: block;
+						line-height: 1;
+						.font-size(@font-size-footnote);
+					}
+				}
+
+				&.active {
+					color: @tabs-primary-color;
+				}
+			}
+		}
+	}
+}
+
+.@{tabs-prefix}-panel {
+	display: none;
+
+	&.active {
+		display: block;
+	}
+
+	> .@{tabs-prefix}s-capsule {
+		.margin-top(@S2);
+	}
+}
