@@ -1,7 +1,7 @@
 {
   "name": "m-tabs",
   "version": "1.0.0",
-  "description": "m-tabs 标签页选项卡切换组件",
+  "description": "m-tabs 移动端标签页选项卡切换组件",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
