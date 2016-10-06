@@ -31,17 +31,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * tab
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * 导航tab
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * 调用方式:
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * <Tabs defaultActiveKey="1" type="nav|capsule" centered onChange={callback}>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                *     <TabPane tab="选项一" key="1">选项一的内容~~</TabPane>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                *     <TabPane tab="选项二" key="2">选项二的内容 ~~</TabPane>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                *     <a tab="链接一" href="">链接一</a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * </Tabs>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); } 
+
+/**
+ * tab
+ * 导航tab
+ * 调用方式:
+ * <Tabs defaultActiveKey="1" type="nav|capsule" centered onChange={callback}>
+ *     <TabPane tab="选项一" key="1">选项一的内容~~</TabPane>
+ *     <TabPane tab="选项二" key="2">选项二的内容 ~~</TabPane>
+ *     <a tab="链接一" href="">链接一</a>
+ * </Tabs>
+ *
+ */
 
 var tab_types = { nav: true, capsule: true, app: true };
 
@@ -79,9 +81,12 @@ var Tabs = function (_Component) {
         return key;
     };
 
-    Tabs.prototype.handleTabClick = function handleTabClick(e, child) {
+    Tabs.prototype.handleTabClick = function handleTabClick(e, child, i) {
         e.preventDefault();
-        this.setState({ activeKey: child.key });
+        this.setState({
+            activeKey: child.key,
+            activeIndex: i
+        });
 
         if (typeof this.props.onChange === 'function') {
             this.props.onChange(child.key, child);
@@ -104,30 +109,47 @@ var Tabs = function (_Component) {
         var clazz = (0, _classnames2.default)(className, 'tabs', (_classNames = {}, _defineProperty(_classNames, 'tabs-' + type, tab_types[type]), _defineProperty(_classNames, 'tabs-center', type === 'capsule' && centered), _classNames));
 
         var tabsInner = [],
+            tabsNum = 0,
+            tabCurrent = null,
             tabContent = [];
 
         _react2.default.Children.forEach(children, function (child, i) {
+
             var _child$props = child.props;
             var className = _child$props.className;
             var children = _child$props.children;
             var href = _child$props.href;
-
             var others = _objectWithoutProperties(_child$props, ['className', 'children', 'href']);
-
             var activeClass = _this2.state.activeKey === child.key ? 'active' : null;
             var clazz = (0, _classnames2.default)(className, activeClass);
+
+            if (_this2.state.activeKey === child.key) {
+                tabCurrent = {
+                    index: i,
+                    activeColor: _child$props.activeColor || '#07A9FA',
+                    width: _child$props.textWidth || 4,
+                }
+            }
 
             // 有内容的tab
             if (child.type === _tabpane2.default) {
 
                 tabsInner.push(_react2.default.createElement(
                     'a',
-                    { key: 'tab-item-' + i, onClick: function onClick(e) {
-                            _this2.handleTabClick(e, child);
-                        }, className: activeClass },
+                    {
+                        key: 'tab-item-' + i,
+                        onClick: function onClick(e) {
+                            _this2.handleTabClick(e, child, i);
+                        },
+                        className: activeClass
+                    },
                     _react2.default.createElement(
                         'span',
-                        null,
+                        _this2.state.activeKey === child.key ? {
+                            style: {
+                                color: _child$props.activeColor || '#07A9FA'
+                            }
+                        } : null,
                         child.props.tab
                     )
                 ));
@@ -137,17 +159,22 @@ var Tabs = function (_Component) {
                     _extends({ key: 'tab-pane-' + i, className: clazz }, others),
                     children
                 ));
+
             } else if (child.type === 'a') {
                 // 无内容的tab或链接(取决于有没有key属性)
 
                 tabsInner.push(child.key ? _react2.default.createElement(
                     'a',
                     _extends({ key: 'tab-item-' + i, href: 'javascript:void(0)', onClick: function onClick(e) {
-                            _this2.handleTabClick(e, child);
+                            _this2.handleTabClick(e, child, i);
                         }, className: clazz }, others),
                     _react2.default.createElement(
                         'span',
-                        null,
+                        _this2.state.activeKey === child.key ? {
+                            style: {
+                                color: _child$props.activeColor || '#07A9FA'
+                            }
+                        } : null,
                         children
                     )
                 ) : _react2.default.createElement(
@@ -155,12 +182,44 @@ var Tabs = function (_Component) {
                     _extends({ key: 'tab-item-' + i, href: href, className: className }, others),
                     _react2.default.createElement(
                         'span',
-                        null,
+                        _this2.state.activeKey === child.key ? {
+                            style: {
+                                color: _child$props.activeColor || '#07A9FA'
+                            }
+                        } : null,
                         children
                     )
                 ));
+
             }
+
+            tabsNum += 1
+
         });
+
+        if (tabCurrent) {
+            tabsInner.push(_react2.default.createElement(
+                'span',
+                {
+                    key: 'tab-indicator',
+                    style: {
+                        width: 100 / tabsNum + '%',
+                        transform: 'translate3d(' + 10 / tabsNum * tabCurrent.index + 'rem' + ',0,0)',
+                        WebkitTransform: 'translate3d(' + 10 / tabsNum * tabCurrent.index + 'rem' + ',0,0)'
+                    },
+                    className: 'tab-indicator'
+                },
+                _react2.default.createElement(
+                    'i',
+                    {
+                        style: {
+                            //width: tabCurrent.width || '4em',
+                            backgroundColor: tabCurrent.activeColor
+                        }
+                    }
+                )
+            ))
+        }
 
         var innerContent = [_react2.default.createElement(
             'div',
@@ -184,6 +243,7 @@ var Tabs = function (_Component) {
     };
 
     return Tabs;
+
 }(_react.Component);
 
 Tabs.propTypes = {
