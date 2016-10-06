@@ -1,6 +1,6 @@
 {
   "name": "m-tabs",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "m-tabs 移动端标签页选项卡切换组件",
   "main": "index.js",
   "scripts": {
