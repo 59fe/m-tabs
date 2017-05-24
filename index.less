@@ -49,6 +49,7 @@
 	// 导航式tab
 	&-nav {
 		> .@{tabs-prefix}s-inner {
+			position: relative;
 			.scrollable();
 			.none-scrollbar();
 			.height(@S10);
@@ -66,14 +67,35 @@
 					.line-height(@S4);
 					//.padding-left(@S5);
 					//.padding-right(@S5);
+					transition: .4s;
+					-webkit-transition: .4s;
 				}
 				+ a > span {
 					.border-left(1, @tabs-border-color);
 				}
-				&.active {
-					.border-bottom(4, @tabs-primary-color);
+				//&.active {
+				//	.border-bottom(4, @tabs-primary-color);
+				//}
+			}
+
+			.tab-indicator{
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				height: 4rem / 75;
+				overflow: hidden;
+				transition: .4s;
+				-webkit-transition: .4s;
+				i{
+					display: block;
+					width: 4em;
+					height: 4rem / 75; // 4px;
+					margin: 0 auto;
+					transition: .4s;
+					-webkit-transition: .4s;
 				}
 			}
+
 		}
 	}
 
