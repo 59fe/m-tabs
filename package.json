@@ -1,6 +1,6 @@
 {
   "name": "m-tabs",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "m-tabs 移动端标签页选项卡切换组件",
   "main": "index.js",
   "scripts": {
@@ -26,7 +26,8 @@
   },
   "readmeFilename": "README.md",
   "dependencies": {
-    "react": "~15.2.0",
+    "react": "~15.5.4",
+    "prop-types": "^15.5.8",
     "m-base": "^1.0.5",
     "classnames": "~2.2.3"
   },

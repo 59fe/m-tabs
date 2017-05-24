@@ -11,6 +11,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _PropTypes = require('prop-types');
+
+var _PropTypes2 = _interopRequireDefault(_PropTypes);
+
 var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
@@ -187,10 +191,10 @@ var Tabs = function (_Component) {
 }(_react.Component);
 
 Tabs.propTypes = {
-    type: _react.PropTypes.string,
-    defaultActiveKey: _react.PropTypes.string,
-    centered: _react.PropTypes.bool,
-    onChange: _react.PropTypes.func
+    type:             _PropTypes2.default.string,
+    defaultActiveKey: _PropTypes2.default.string,
+    centered:         _PropTypes2.default.bool,
+    onChange:         _PropTypes2.default.func
 };
 
 Tabs.defaultProps = {
